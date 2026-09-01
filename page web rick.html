@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SidServicios.com</title>
+    <style>
+      :root {
+        --azul-oscuro: #0f172a;
+        --azul-principal: #2563eb;
+        --azul-suave: #dbeafe;
+        --texto: #1f2937;
+        --gris: #6b7280;
+        --fondo: #f3f7ff;
+        --blanco: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(180deg, #f7faff 0%, #eef5ff 100%);
+        color: var(--texto);
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--azul-oscuro), #1e3a8a);
+        color: white;
+        padding: 22px 0;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.15);
+      }
+
+      nav {
+        width: 90%;
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.7rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 26px;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+
+      nav a:hover {
+        color: #ffffff;
+      }
+
+      .hero {
+        width: 90%;
+        max-width: 1100px;
+        margin: 70px auto 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+      }
+
+      .hero-text {
+        flex: 1;
+      }
+
+      .hero-text h1 {
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        line-height: 1.1;
+        margin: 0 0 20px;
+        color: var(--azul-oscuro);
+      }
+
+      .hero-text p {
+        font-size: 1.12rem;
+        line-height: 1.8;
+        margin-bottom: 28px;
+        color: var(--gris);
+        max-width: 560px;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 14px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--azul-principal), #1d4ed8);
+        color: white;
+        box-shadow: 0 12px 24px rgba(37, 99, 235, 0.3);
+      }
+
+      .btn-secondary {
+        background: white;
+        color: var(--azul-oscuro);
+        border: 1px solid rgba(15, 23, 42, 0.1);
+      }
+
+      .hero-image {
+        flex: 1;
+        text-align: center;
+      }
+
+      .hero-image img {
+        width: 100%;
+        max-width: 520px;
+        border-radius: 22px;
+        box-shadow: 0 24px 50px rgba(37, 99, 235, 0.18);
+        border: 1px solid rgba(37, 99, 235, 0.12);
+      }
+
+      .cards {
+        width: 90%;
+        max-width: 1100px;
+        margin: 0 auto 80px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 18px;
+        padding: 28px 22px;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        border: 1px solid rgba(37, 99, 235, 0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 18px 35px rgba(37, 99, 235, 0.12);
+      }
+
+      .card h3 {
+        margin: 0 0 12px;
+        color: var(--azul-oscuro);
+        font-size: 1.35rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--gris);
+        line-height: 1.7;
+      }
+
+      .ceo-section {
+        width: 90%;
+        max-width: 1100px;
+        margin: 0 auto 90px;
+      }
+
+      .ceo-card {
+        background: linear-gradient(135deg, #ffffff, #eef4ff);
+        border-radius: 24px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        box-shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
+        border: 1px solid rgba(37, 99, 235, 0.08);
+      }
+
+      .ceo-image {
+        flex: 0 0 300px;
+        text-align: center;
+      }
+
+      .ceo-image img {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        object-fit: contain;
+        border-radius: 22px;
+        border: 4px solid #dbeafe;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+      }
+
+      .ceo-content {
+        flex: 1;
+      }
+
+      .ceo-content .tag {
+        display: inline-block;
+        background: var(--azul-suave);
+        color: var(--azul-principal);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+
+      .ceo-content h2 {
+        font-size: clamp(1.9rem, 3vw, 2.8rem);
+        margin: 0 0 10px;
+        color: var(--azul-oscuro);
+      }
+
+      .ceo-content h3 {
+        color: var(--azul-principal);
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+      }
+
+      .ceo-content p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--texto);
+      }
+
+      .references {
+        width: 90%;
+        max-width: 1100px;
+        margin: 0 auto 80px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(37, 99, 235, 0.08);
+        border-radius: 20px;
+        padding: 30px 24px;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+      }
+
+      .references h3 {
+        margin: 0 0 20px;
+        text-align: center;
+        font-size: 1.8rem;
+        color: var(--azul-oscuro);
+      }
+
+      .references-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        text-align: center;
+      }
+
+      .reference-item {
+        background: linear-gradient(135deg, #f8fbff, #eef4ff);
+        border: 1px solid rgba(37, 99, 235, 0.08);
+        border-radius: 14px;
+        padding: 18px 12px;
+        font-weight: 700;
+        color: var(--azul-oscuro);
+        letter-spacing: 0.04em;
+      }
+
+      footer {
+        background: linear-gradient(135deg, #0f172a, #111827);
+        color: white;
+        text-align: center;
+        padding: 24px 20px;
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        nav ul {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .hero {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .buttons {
+          justify-content: center;
+        }
+
+        .cards {
+          grid-template-columns: 1fr;
+        }
+
+        .ceo-card {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .ceo-image {
+          flex-basis: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">SidServicios</div>
+        <ul>
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Nosotros</a></li>
+          <li><a href="#">Servicios</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-text">
+          <h1>Crea algo increíble con nosotros .</h1>
+          <p>
+            Diseña sitios web hermosos con código limpio, un diseño moderno y una
+            experiencia fácil de usar que ayuda a tu negocio a crecer.
+          </p>
+          <div class="buttons">
+            <a href="#" class="btn btn-primary">Comenzar</a>
+            <a href="#" class="btn btn-secondary">Saber más</a>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <img
+            src="https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=900&q=80"
+            alt="Espacio de trabajo creativo"
+          />
+        </div>
+      </section>
+
+      <section class="cards">
+        <div class="card">
+          <h3>Diseño web</h3>
+          <p>Diseños modernos y responsivos pensados para cualquier tamaño de pantalla.</p>
+        </div>
+
+        <div class="card">
+          <h3>Desarrollo</h3>
+          <p>Implementación limpia de HTML, CSS y JavaScript para un rendimiento óptimo.</p>
+        </div>
+
+        <div class="card">
+          <h3>Soporte</h3>
+          <p>Asistencia confiable para que tu proyecto avance de principio a fin.</p>
+        </div>
+
+        <div class="card">
+          <h3>E-commerce</h3>
+          <p>Tiendas en línea con pagos, catálogo y experiencia de compra optimizada.</p>
+        </div>
+
+        <div class="card">
+          <h3>SEO</h3>
+          <p>Optimización para motores de búsqueda y mejor visibilidad en internet.</p>
+        </div>
+
+        <div class="card">
+          <h3>Mantenimiento</h3>
+          <p>Actualizaciones, seguridad y soporte continuo para mantener tu sitio activo.</p>
+        </div>
+      </section>
+
+      <section class="ceo-section">
+        <div class="ceo-card">
+          <div class="ceo-image">
+            <img src="https://th.bing.com/th/id/OIP.MqV-Zn-rCXSxiMf_8pDiZgHaEK?w=289&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt="CEO de la empresa" />
+          </div>
+          <div class="ceo-content">
+            <span class="tag">CEO</span>
+            <h2>Ricardo Fernandez</h2>
+            <h3>Director General</h3>
+            <p>
+              Lidera la estrategia de la empresa con una visión enfocada en la innovación,
+              la excelencia y la creación de experiencias que generen valor para nuestros
+              clientes y socios.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="references">
+        <h3>Empresas de referencia</h3>
+        <div class="references-grid">
+          <div class="reference-item">Softtek</div>
+          <div class="reference-item">Google</div>
+          <div class="reference-item">Microsoft</div>
+          <div class="reference-item">Amazon</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      &copy; 2026 SidServicios. Todos los derechos reservados.
+    </footer>
+  </body>
+</html>
