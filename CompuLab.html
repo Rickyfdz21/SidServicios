@@ -15,7 +15,7 @@
         --panel-2: #222222;
         --panel-3: #2b2b2b;
         --line: rgba(255, 255, 255, 0.14);
-        --primary: #ECE81E;
+        --primary: #e7700f;
         --primary-2: #fbbf24;
         --secondary: #5eead4;
         --accent: #7c3aed;
@@ -293,11 +293,18 @@
         margin-top: 26px;
       }
       .step-card {
+        width: 100%;
+        text-align: left;
+        color: var(--text);
+        font: inherit;
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid var(--line);
         border-radius: 16px;
         padding: 18px 16px;
+        cursor: pointer;
+        transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
       }
+      .step-card:hover { transform: translateY(-2px); border-color: var(--primary); }
       .step-card.active {
         background: rgba(245, 158, 11, 0.08);
         border-color: rgba(245, 158, 11, 0.3);
@@ -329,6 +336,7 @@
         border-radius: 20px;
         padding: 24px;
       }
+      .category-panel.is-hidden { display: none; }
       .category-panel h3,
       .product-panel h3 { margin: 0 0 16px; font-size: 1.35rem; }
       .brand-grid {
@@ -385,12 +393,20 @@
         position: relative;
         overflow: hidden;
       }
-      .product-thumb::before {
-        content: "";
-        position: absolute;
-        inset: 14px;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+      .product-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #ffffff;
+      }
+      .component-placeholder {
+        display: grid;
+        place-items: center;
+        height: 100%;
+        color: var(--primary-2);
+        font: 900 1.1rem "Montserrat", sans-serif;
+        letter-spacing: 0.08em;
       }
       .product-info h4 { margin: 0 0 4px; font-size: 1.05rem; }
       .product-info p { margin: 0; color: var(--muted); font-size: 0.82rem; }
@@ -498,6 +514,11 @@
         cursor: grab;
         touch-action: none;
         user-select: none;
+      }
+      .viewer-stage iframe {
+        width: 100%;
+        height: 430px;
+        border: 0;
       }
       .viewer-stage.is-dragging { cursor: grabbing; }
       .case-360 {
@@ -644,33 +665,13 @@
             </div>
             <div class="amount">$0.00 <small>MXN</small></div>
             <ul class="selection-list">
-              <li class="active"><span class="step-number">1</span> Marca del procesador</li>
-              <li><span class="step-number">2</span> Procesador</li>
-              <li><span class="step-number">3</span> Tarjeta madre</li>
-              <li><span class="step-number">4</span> Memoria RAM</li>
-              <li><span class="step-number">5</span> Tarjeta de video</li>
+              <li class="active"><span class="step-number">1</span> Procesador</li>
+              <li><span class="step-number">2</span> Tarjeta madre</li>
+              <li><span class="step-number">3</span> Memoria RAM</li>
+              <li><span class="step-number">4</span> Tarjeta de video</li>
+              <li><span class="step-number">5</span> Almacenamiento</li>
             </ul>
           </aside>
-        </div>
-      </section>
-
-      <section class="model-section" id="modelo-3d">
-        <div class="container">
-          <div class="section-head">
-            <div>
-              <span class="eyebrow">Explora tu próxima máquina</span>
-              <h2>Modelo 3D del gabinete</h2>
-            </div>
-            <p>Gira, acerca y explora el modelo directamente en la página.</p>
-          </div>
-          <div class="model-frame">
-            <iframe
-              title="Modelo 3D de PC en Sketchfab"
-              src="https://sketchfab.com/models/2e11c4583ebe4fc98c073fd8a2690a06/embed?autostart=1&ui_theme=dark"
-              allow="autoplay; fullscreen; xr-spatial-tracking"
-              allowfullscreen>
-            </iframe>
-          </div>
         </div>
       </section>
 
@@ -682,31 +683,31 @@
           </div>
 
           <div class="steps">
-            <div class="step-card active">
+            <button class="step-card active" type="button" data-step="Procesador">
               <div class="n">Paso 1</div>
               <h3>Procesador</h3>
               <p>Elige la marca y la familia ideal.</p>
-            </div>
-            <div class="step-card">
+            </button>
+            <button class="step-card" type="button" data-step="Motherboard">
               <div class="n">Paso 2</div>
-              <h3>Motherboard</h3>
+              <h3>Tarjeta madre</h3>
               <p>Compatibilidad y expansión.</p>
-            </div>
-            <div class="step-card">
+            </button>
+            <button class="step-card" type="button" data-step="RAM">
               <div class="n">Paso 3</div>
               <h3>RAM</h3>
               <p>Velocidad y capacidad suficientes.</p>
-            </div>
-            <div class="step-card">
+            </button>
+            <button class="step-card" type="button" data-step="GPU">
               <div class="n">Paso 4</div>
               <h3>GPU</h3>
               <p>Rendimiento para gaming/edición.</p>
-            </div>
-            <div class="step-card">
+            </button>
+            <button class="step-card" type="button" data-step="Almacenamiento">
               <div class="n">Paso 5</div>
               <h3>Almacenamiento</h3>
               <p>SSD y capacidad para tus juegos.</p>
-            </div>
+            </button>
           </div>
 
           <div class="catalog">
@@ -727,8 +728,10 @@
             <div class="product-panel">
               <h3>Productos recomendados</h3>
               <div class="product-list">
-                <div class="product-item active" data-price="2899">
-                  <div class="product-thumb"></div>
+                <div class="product-item active" data-price="2899" data-model="ad8a458fa799483b92d119018f6505f1">
+                  <div class="product-thumb">
+                    <img class="product-image" src="intel.svg" alt="Procesador Intel Core i5-12400F" />
+                  </div>
                   <div class="product-info">
                     <h4>Intel Core i5-12400F</h4>
                     <p>6 núcleos • 12 hilos</p>
@@ -737,18 +740,10 @@
                   <div class="price-tag">$2,899</div>
                 </div>
 
-                <div class="product-item" data-price="5499">
-                  <div class="product-thumb"></div>
-                  <div class="product-info">
-                    <h4>Intel Core i7-12700K</h4>
-                    <p>12 núcleos • 20 hilos</p>
-                    <button class="view-360" type="button" data-product="Intel Core i7-12700K">Ver en 360°</button>
+                <div class="product-item" data-price="2599" data-model="1649601de2014dbeab4f201010a7c366">
+                  <div class="product-thumb">
+                    <img class="product-image" src="ryzen.svg" alt="Procesador AMD Ryzen 5 5600X" />
                   </div>
-                  <div class="price-tag">$5,499</div>
-                </div>
-
-                <div class="product-item" data-price="2599">
-                  <div class="product-thumb"></div>
                   <div class="product-info">
                     <h4>AMD Ryzen 5 5600X</h4>
                     <p>6 núcleos • 12 hilos</p>
@@ -781,6 +776,26 @@
           </div>
         </div>
       </section>
+
+      <section class="model-section" id="modelo-3d">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Explora tu próxima máquina</span>
+              <h2>Modelo 3D del gabinete</h2>
+            </div>
+            <p>Gira, acerca y explora el modelo directamente en la página.</p>
+          </div>
+          <div class="model-frame">
+            <iframe
+              title="Modelo 3D de PC en Sketchfab"
+              src="https://sketchfab.com/models/2e11c4583ebe4fc98c073fd8a2690a06/embed?autostart=1&ui_theme=dark"
+              allow="autoplay; fullscreen; xr-spatial-tracking"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer id="contacto">
@@ -792,10 +807,10 @@
         <button class="viewer-close" id="viewerClose" type="button" aria-label="Cerrar visor">&times;</button>
         <h2 id="viewerTitle">Vista 360°</h2>
         <p>Explora el diseño del gabinete antes de elegirlo.</p>
-        <div class="viewer-stage" id="viewerStage" aria-label="Arrastra para girar el producto">
-          <div class="case-360" id="case360"></div>
+        <div class="viewer-stage" id="viewerStage" aria-label="Explora el modelo 3D">
+          <iframe id="modelViewer" title="Modelo 3D seleccionado" src="https://sketchfab.com/models/ad8a458fa799483b92d119018f6505f1/embed?ui_theme=dark&autostart=1" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
         </div>
-        <p class="viewer-hint">Arrastra hacia los lados para girar</p>
+        <p class="viewer-hint">Gira y acerca el modelo con los controles del visor</p>
       </div>
     </div>
 
