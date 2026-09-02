@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CompuLab | Personaliza tu PC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #121212;
+        --bg-2: #171717;
+        --panel: #1a1a1a;
+        --panel-2: #222222;
+        --panel-3: #2b2b2b;
+        --line: rgba(255, 255, 255, 0.14);
+        --primary: #ECE81E;
+        --primary-2: #fbbf24;
+        --secondary: #5eead4;
+        --accent: #7c3aed;
+        --text: #f5f5f5;
+        --muted: #9aa9bf;
+        --green: #2dd4bf;
+        --danger: #f87171;
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(180deg, #121212 0%, #1a1a1a 100%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      h1, h2, h3, .brand {
+        font-family: "Montserrat", sans-serif;
+      }
+      a { text-decoration: none; }
+      img { max-width: 100%; display: block; }
+      .container { width: min(1200px, 92%); margin: 0 auto; }
+
+      .topbar {
+        background: #0d0d0e;
+        border-bottom: 1px solid var(--line);
+      }
+      .topbar-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 52px;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      .topbar-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+      .topbar a { color: var(--muted); }
+      .topbar a:hover { color: var(--text); }
+
+      header {
+        background: rgba(13, 13, 14, 0.97);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 84px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        font-size: 1.5rem;
+      }
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        background: var(--primary);
+        color: #ffffff;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-links a {
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .nav-links a:hover { color: var(--text); }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .cart-pill {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 12px;
+        color: var(--text);
+        font-size: 0.8rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+        min-height: 48px;
+        border-radius: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-family: "Inter", sans-serif;
+        font-weight: 800;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .btn:hover { transform: translateY(-2px); }
+      .btn-primary {
+        background: var(--primary);
+        color: #ffffff;
+        box-shadow: 0 12px 24px rgba(245, 158, 11, 0.25);
+      }
+      .btn-secondary {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.28);
+        color: var(--text);
+      }
+
+      .hero {
+        background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.15), transparent 30%),
+          linear-gradient(180deg, #121212 0%, #1a1a1a 100%);
+        padding: 58px 0 28px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 30px;
+        align-items: center;
+      }
+      .eyebrow {
+        display: inline-block;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        background: rgba(245, 158, 11, 0.08);
+        color: var(--primary-2);
+        font-size: 0.78rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-weight: 800;
+        border-radius: 999px;
+        padding: 8px 14px;
+      }
+      .hero h1 {
+        font-size: clamp(2.6rem, 4vw, 4.2rem);
+        line-height: 1.1;
+        margin: 18px 0 18px;
+        letter-spacing: -0.05em;
+      }
+      .hero p {
+        color: var(--muted);
+        max-width: 680px;
+        font-size: 1.08rem;
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 24px;
+      }
+      .mini-info {
+        display: flex;
+        gap: 30px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+      .mini-info div {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .mini-info strong { color: var(--text); font-size: 1.4rem; }
+      .mini-info span { color: var(--muted); font-size: 0.8rem; }
+
+      .summary-card {
+        background: linear-gradient(180deg, rgba(34, 34, 34, 0.98), rgba(18, 18, 18, 0.98));
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+      .summary-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      .summary-top h3 { margin: 0; font-size: 1.1rem; }
+      .price-badge {
+        background: rgba(159, 232, 112, 0.1);
+        border: 1px solid rgba(159, 232, 112, 0.4);
+        color: var(--green);
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+      .amount {
+        font-size: 2.3rem;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+      }
+      .amount small {
+        font-size: 0.7rem;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .selection-list {
+        list-style: none;
+        padding: 0;
+        margin: 18px 0 0;
+        display: grid;
+        gap: 12px;
+      }
+      .selection-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--line);
+        color: var(--muted);
+      }
+      .selection-list li.active {
+        background: rgba(245, 158, 11, 0.08);
+        border-color: rgba(245, 158, 11, 0.45);
+        color: var(--text);
+      }
+      .step-number {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: rgba(148, 163, 184, 0.16);
+        color: var(--text);
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+      .selection-list li.active .step-number {
+        background: var(--primary);
+        color: #ffffff;
+      }
+
+      .wizard { padding: 48px 0 20px; }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+        letter-spacing: -0.04em;
+      }
+      .section-head p { margin: 0; color: var(--muted); }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 26px;
+      }
+      .step-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 18px 16px;
+      }
+      .step-card.active {
+        background: rgba(245, 158, 11, 0.08);
+        border-color: rgba(245, 158, 11, 0.3);
+      }
+      .step-card .n {
+        font-size: 0.75rem;
+        color: var(--primary-2);
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+      .step-card h3 { margin: 10px 0 8px; font-size: 1.1rem; }
+      .step-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .catalog {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 28px;
+        margin-top: 28px;
+      }
+      .category-panel,
+      .product-panel {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 24px;
+      }
+      .category-panel h3,
+      .product-panel h3 { margin: 0 0 16px; font-size: 1.35rem; }
+      .brand-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .brand-card {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 16px;
+        padding: 18px 16px;
+        text-align: center;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        font-weight: 700;
+      }
+      .brand-card.active {
+        border-color: rgba(245, 158, 11, 0.5);
+        background: rgba(245, 158, 11, 0.08);
+      }
+      .brand-badge {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        font-weight: 900;
+      }
+      .intel { background: rgba(59, 130, 246, 0.12); }
+      .amd { background: rgba(239, 68, 68, 0.12); }
+
+      .product-list { display: grid; gap: 14px; }
+      .product-item {
+        display: grid;
+        grid-template-columns: 90px 1fr auto;
+        gap: 14px;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--line);
+        padding: 12px 14px;
+        border-radius: 14px;
+      }
+      .product-thumb {
+        height: 70px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+        position: relative;
+        overflow: hidden;
+      }
+      .product-thumb::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+      }
+      .product-info h4 { margin: 0 0 4px; font-size: 1.05rem; }
+      .product-info p { margin: 0; color: var(--muted); font-size: 0.82rem; }
+      .price-tag { font-weight: 800; color: var(--primary-2); }
+      .view-360 {
+        margin-top: 8px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+        font: 700 0.72rem "Inter", sans-serif;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .view-360:hover { color: var(--primary-2); }
+
+      .product-item {
+        cursor: pointer;
+        transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+      }
+      .product-item:hover,
+      .product-item.active {
+        border-color: rgba(245, 158, 11, 0.5);
+        background: rgba(245, 158, 11, 0.08);
+        transform: translateY(-2px);
+      }
+
+      .features-box {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 28px;
+      }
+      .feature-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 22px 18px;
+      }
+      .feature-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: rgba(94, 234, 212, 0.12);
+        color: var(--secondary);
+        font-size: 1.5rem;
+        margin-bottom: 14px;
+      }
+      .feature-card h3 { margin: 0 0 8px; font-size: 1.15rem; }
+      .feature-card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+      footer {
+        border-top: 1px solid var(--line);
+        background: #0d0d0e;
+        color: var(--muted);
+        padding: 28px 0;
+        text-align: center;
+      }
+
+      .viewer-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.78);
+      }
+      .viewer-modal[hidden] { display: none; }
+      .viewer-dialog {
+        position: relative;
+        width: min(680px, 100%);
+        padding: 28px;
+        background: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+      }
+      .viewer-dialog h2 { margin: 0 36px 4px 0; font-size: 1.5rem; }
+      .viewer-dialog p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+      .viewer-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+        color: var(--text);
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+      .viewer-stage {
+        display: grid;
+        place-items: center;
+        min-height: 310px;
+        margin-top: 22px;
+        overflow: hidden;
+        border-radius: 14px;
+        background: radial-gradient(circle, #343438 0%, #111112 70%);
+        cursor: grab;
+        touch-action: none;
+        user-select: none;
+      }
+      .viewer-stage.is-dragging { cursor: grabbing; }
+      .case-360 {
+        --rotation: 0deg;
+        position: relative;
+        width: 190px;
+        height: 250px;
+        border: 6px solid #424247;
+        border-radius: 12px 12px 8px 8px;
+        background: linear-gradient(90deg, #111112 0%, #4a4a4e 46%, #1a1a1c 100%);
+        box-shadow: 20px 18px 0 rgba(0, 0, 0, 0.32), 0 20px 35px rgba(0, 0, 0, 0.5);
+        transform: perspective(700px) rotateY(var(--rotation));
+        transition: transform 0.12s ease-out;
+      }
+      .case-360::before {
+        content: "";
+        position: absolute;
+        inset: 22px 16px 20px;
+        border: 3px solid #77777d;
+        border-radius: 5px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(0,0,0,0.35));
+      }
+      .case-360::after {
+        content: "RGB";
+        position: absolute;
+        right: 18px;
+        top: 12px;
+        color: var(--primary-2);
+        font: 800 0.6rem "Inter", sans-serif;
+        letter-spacing: 0.08em;
+      }
+      .viewer-hint {
+        margin-top: 14px !important;
+        text-align: center;
+        font-size: 0.78rem !important;
+      }
+      .model-section {
+        padding: 64px 0;
+        background: #1a1a1a;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .model-section .section-head { margin-bottom: 26px; }
+      .model-frame {
+        overflow: hidden;
+        border: 1px solid rgba(245, 158, 11, 0.5);
+        border-radius: 14px;
+        background: #0b0b0b;
+        box-shadow: var(--shadow);
+      }
+      .model-frame iframe {
+        display: block;
+        width: 100%;
+        height: min(620px, 68vw);
+        min-height: 400px;
+        border: 0;
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid, .catalog, .features-box { grid-template-columns: 1fr; }
+        .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      @media (max-width: 640px) {
+        .nav, .topbar-inner, .section-head { flex-direction: column; align-items: flex-start; }
+        .nav-links { flex-wrap: wrap; gap: 12px 18px; }
+        .steps, .brand-grid { grid-template-columns: 1fr; }
+        .product-item { grid-template-columns: 1fr; text-align: center; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <div>Envíos a todo México • Soporte técnico especializado</div>
+        <div class="topbar-links">
+          <a href="#">Ayuda</a>
+          <a href="#">Contacto</a>
+          <a href="#">Mi cuenta</a>
+        </div>
+      </div>
+    </div>
+
+    <header>
+      <div class="container nav">
+        <div class="brand">
+          <div class="brand-mark">C</div>
+          <span>CompuLab</span>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#configurador">Categorías</a></li>
+          <li><a href="#configurador">Arma tu PC</a></li>
+          <li><a href="#modelo-3d">Modelo 3D</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <span class="cart-pill">🛒 0 artículos</span>
+          <a href="#contacto" class="btn btn-primary">Cotizar</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Personaliza tu PC</span>
+            <h1>Donde nace tu proxima maquina.</h1>
+            <p>
+              No, aquí en CompuLab no vendemos cajas; creamos bestias hechas a tu
+              medida. Eliges el poder, nosotros le damos vida para reventar juegos,
+              trabajar sin que se crashee nada y para todo lo que quieras. Potencia
+              pura, precio justo y armada por personas que saben lo que quieren: tú y
+              los expertos.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#configurador" class="btn btn-primary">Empezar</a>
+              <a href="#configurador" class="btn btn-secondary">Ver catálogo</a>
+            </div>
+
+            <div class="mini-info">
+              <div>
+                <strong>+2,000</strong>
+                <span>Equipos armados</span>
+              </div>
+              <div>
+                <strong>24/7</strong>
+                <span>Atención</span>
+              </div>
+              <div>
+                <strong>3 años</strong>
+                <span>Garantía</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="summary-card">
+            <div class="summary-top">
+              <h3>Tu configuración</h3>
+              <span class="price-badge">Actual</span>
+            </div>
+            <div class="amount">$0.00 <small>MXN</small></div>
+            <ul class="selection-list">
+              <li class="active"><span class="step-number">1</span> Marca del procesador</li>
+              <li><span class="step-number">2</span> Procesador</li>
+              <li><span class="step-number">3</span> Tarjeta madre</li>
+              <li><span class="step-number">4</span> Memoria RAM</li>
+              <li><span class="step-number">5</span> Tarjeta de video</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="model-section" id="modelo-3d">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Explora tu próxima máquina</span>
+              <h2>Modelo 3D del gabinete</h2>
+            </div>
+            <p>Gira, acerca y explora el modelo directamente en la página.</p>
+          </div>
+          <div class="model-frame">
+            <iframe
+              title="Modelo 3D de PC en Sketchfab"
+              src="https://sketchfab.com/models/2e11c4583ebe4fc98c073fd8a2690a06/embed?autostart=1&ui_theme=dark"
+              allow="autoplay; fullscreen; xr-spatial-tracking"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </section>
+
+      <section class="wizard" id="configurador">
+        <div class="container">
+          <div class="section-head">
+            <h2>Selecciona tus componentes</h2>
+            <p>Haz tu PC a medida paso a paso</p>
+          </div>
+
+          <div class="steps">
+            <div class="step-card active">
+              <div class="n">Paso 1</div>
+              <h3>Procesador</h3>
+              <p>Elige la marca y la familia ideal.</p>
+            </div>
+            <div class="step-card">
+              <div class="n">Paso 2</div>
+              <h3>Motherboard</h3>
+              <p>Compatibilidad y expansión.</p>
+            </div>
+            <div class="step-card">
+              <div class="n">Paso 3</div>
+              <h3>RAM</h3>
+              <p>Velocidad y capacidad suficientes.</p>
+            </div>
+            <div class="step-card">
+              <div class="n">Paso 4</div>
+              <h3>GPU</h3>
+              <p>Rendimiento para gaming/edición.</p>
+            </div>
+            <div class="step-card">
+              <div class="n">Paso 5</div>
+              <h3>Almacenamiento</h3>
+              <p>SSD y capacidad para tus juegos.</p>
+            </div>
+          </div>
+
+          <div class="catalog">
+            <div class="category-panel">
+              <h3>1. Marca del procesador</h3>
+              <div class="brand-grid">
+                <div class="brand-card active" data-brand="Intel">
+                  <div class="brand-badge intel">I</div>
+                  Intel
+                </div>
+                <div class="brand-card" data-brand="AMD">
+                  <div class="brand-badge amd">A</div>
+                  AMD
+                </div>
+              </div>
+            </div>
+
+            <div class="product-panel">
+              <h3>Productos recomendados</h3>
+              <div class="product-list">
+                <div class="product-item active" data-price="2899">
+                  <div class="product-thumb"></div>
+                  <div class="product-info">
+                    <h4>Intel Core i5-12400F</h4>
+                    <p>6 núcleos • 12 hilos</p>
+                    <button class="view-360" type="button" data-product="Intel Core i5-12400F">Ver en 360°</button>
+                  </div>
+                  <div class="price-tag">$2,899</div>
+                </div>
+
+                <div class="product-item" data-price="5499">
+                  <div class="product-thumb"></div>
+                  <div class="product-info">
+                    <h4>Intel Core i7-12700K</h4>
+                    <p>12 núcleos • 20 hilos</p>
+                    <button class="view-360" type="button" data-product="Intel Core i7-12700K">Ver en 360°</button>
+                  </div>
+                  <div class="price-tag">$5,499</div>
+                </div>
+
+                <div class="product-item" data-price="2599">
+                  <div class="product-thumb"></div>
+                  <div class="product-info">
+                    <h4>AMD Ryzen 5 5600X</h4>
+                    <p>6 núcleos • 12 hilos</p>
+                    <button class="view-360" type="button" data-product="AMD Ryzen 5 5600X">Ver en 360°</button>
+                  </div>
+                  <div class="price-tag">$2,599</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="features-box" id="asesoria">
+            <article class="feature-card">
+              <div class="feature-icon">⚙️</div>
+              <h3>Compatibilidad</h3>
+              <p>Verifica piezas compatibles para un montaje perfecto y sin errores de configuración.</p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">🚚</div>
+              <h3>Envíos</h3>
+              <p>Entrega segura a la puerta de tu hogar o negocio, con seguimiento en tiempo real.</p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">💳</div>
+              <h3>Pago</h3>
+              <p>Compra con tarjeta, transferencia o depósito, con opciones flexibles de financiamiento.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contacto">
+      © 2026 CompuLab • Personaliza tu PC • Todos los derechos reservados.
+    </footer>
+
+    <div class="viewer-modal" id="viewerModal" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" hidden>
+      <div class="viewer-dialog">
+        <button class="viewer-close" id="viewerClose" type="button" aria-label="Cerrar visor">&times;</button>
+        <h2 id="viewerTitle">Vista 360°</h2>
+        <p>Explora el diseño del gabinete antes de elegirlo.</p>
+        <div class="viewer-stage" id="viewerStage" aria-label="Arrastra para girar el producto">
+          <div class="case-360" id="case360"></div>
+        </div>
+        <p class="viewer-hint">Arrastra hacia los lados para girar</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
