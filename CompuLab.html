@@ -376,6 +376,31 @@
       .amd { background: rgba(239, 68, 68, 0.12); }
 
       .product-list { display: grid; gap: 14px; }
+      .catalog-tools { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+      .search-input {
+        flex: 1 1 220px;
+        min-height: 44px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--panel);
+        color: var(--text);
+        font: 500 0.9rem "Inter", sans-serif;
+      }
+      .search-input:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+      .tool-button {
+        min-height: 44px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+        font: 800 0.72rem "Inter", sans-serif;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .tool-button:hover { border-color: var(--primary); color: var(--primary-2); }
       .product-item {
         display: grid;
         grid-template-columns: 90px 1fr auto;
@@ -411,6 +436,20 @@
       .product-info h4 { margin: 0 0 4px; font-size: 1.05rem; }
       .product-info p { margin: 0; color: var(--muted); font-size: 0.82rem; }
       .price-tag { font-weight: 800; color: var(--primary-2); }
+      .add-button {
+        display: block;
+        margin-top: 8px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--primary-2);
+        cursor: pointer;
+        font: 800 0.72rem "Inter", sans-serif;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .add-button:hover { color: var(--text); }
+      .empty-products { padding: 24px 10px; color: var(--muted); text-align: center; }
       .view-360 {
         margin-top: 8px;
         padding: 0;
@@ -520,6 +559,69 @@
         height: 430px;
         border: 0;
       }
+      .motherboard-3d {
+        position: relative;
+        width: min(430px, 78vw);
+        height: min(300px, 55vw);
+        transform: perspective(700px) rotateX(58deg) rotateZ(-12deg);
+        border: 5px solid #1d6b55;
+        border-radius: 10px;
+        background: #176047;
+        box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.3), 0 30px 45px rgba(0, 0, 0, 0.55);
+      }
+      .motherboard-3d::before {
+        content: "CPU   RAM   PCIe";
+        position: absolute;
+        inset: 25px;
+        padding: 18px;
+        border: 2px solid #f5c33d;
+        color: #f5c33d;
+        font: 800 0.78rem "Inter", sans-serif;
+        letter-spacing: 0.12em;
+        background: linear-gradient(135deg, #0c231e, #185241);
+      }
+      .motherboard-3d::after {
+        content: "MOTHERBOARD";
+        position: absolute;
+        bottom: 14px;
+        right: 16px;
+        color: rgba(245, 245, 245, 0.8);
+        font: 800 0.65rem "Inter", sans-serif;
+        letter-spacing: 0.1em;
+      }
+      .component-3d {
+        position: relative;
+        width: min(430px, 78vw);
+        height: min(260px, 52vw);
+        border: 5px solid #66666b;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #3a3a3e, #151517);
+        box-shadow: 20px 20px 0 rgba(0, 0, 0, 0.3), 0 30px 45px rgba(0, 0, 0, 0.55);
+      }
+      .component-3d::before {
+        content: "COMPONENT 3D";
+        position: absolute;
+        inset: 24px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--primary);
+        color: var(--primary-2);
+        font: 900 0.8rem "Inter", sans-serif;
+        letter-spacing: 0.12em;
+        background: rgba(0, 0, 0, 0.35);
+      }
+      .component-3d::after {
+        content: "EXPLORA EL PRODUCTO";
+        position: absolute;
+        right: 16px;
+        bottom: 12px;
+        color: var(--text);
+        font: 800 0.62rem "Inter", sans-serif;
+        letter-spacing: 0.1em;
+      }
+      .component-3d.ram { border-color: #8b5cf6; background: linear-gradient(135deg, #261c42, #111114); }
+      .component-3d.gpu { border-color: #2dd4bf; background: linear-gradient(135deg, #123f3b, #111114); }
+      .component-3d.storage { border-color: #60a5fa; background: linear-gradient(135deg, #1c3654, #111114); }
       .viewer-stage.is-dragging { cursor: grabbing; }
       .case-360 {
         --rotation: 0deg;
@@ -617,8 +719,7 @@
         </ul>
 
         <div class="nav-actions">
-          <span class="cart-pill">🛒 0 artículos</span>
-          <a href="#contacto" class="btn btn-primary">Cotizar</a>
+          <button class="cart-pill tool-button" id="cartButton" type="button">🛒 <span id="cartCount">0</span> artículos</button>
         </div>
       </div>
     </header>
@@ -664,7 +765,7 @@
               <span class="price-badge">Actual</span>
             </div>
             <div class="amount">$0.00 <small>MXN</small></div>
-            <ul class="selection-list">
+            <ul class="selection-list" id="selectionSummary">
               <li class="active"><span class="step-number">1</span> Procesador</li>
               <li><span class="step-number">2</span> Tarjeta madre</li>
               <li><span class="step-number">3</span> Memoria RAM</li>
@@ -713,7 +814,7 @@
           <div class="catalog">
             <div class="category-panel">
               <h3>1. Marca del procesador</h3>
-              <div class="brand-grid">
+              <div class="brand-grid" id="categoryOptions">
                 <div class="brand-card active" data-brand="Intel">
                   <div class="brand-badge intel">I</div>
                   Intel
@@ -727,6 +828,10 @@
 
             <div class="product-panel">
               <h3>Productos recomendados</h3>
+              <div class="catalog-tools">
+                <input class="search-input" id="productSearch" type="search" placeholder="Buscar producto..." aria-label="Buscar producto" />
+                <button class="tool-button" id="resetButton" type="button">Reiniciar</button>
+              </div>
               <div class="product-list">
                 <div class="product-item active" data-price="2899" data-model="ad8a458fa799483b92d119018f6505f1">
                   <div class="product-thumb">
@@ -809,6 +914,7 @@
         <p>Explora el diseño del gabinete antes de elegirlo.</p>
         <div class="viewer-stage" id="viewerStage" aria-label="Explora el modelo 3D">
           <iframe id="modelViewer" title="Modelo 3D seleccionado" src="https://sketchfab.com/models/ad8a458fa799483b92d119018f6505f1/embed?ui_theme=dark&autostart=1" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
+          <div class="component-3d" id="componentViewer" hidden></div>
         </div>
         <p class="viewer-hint">Gira y acerca el modelo con los controles del visor</p>
       </div>
